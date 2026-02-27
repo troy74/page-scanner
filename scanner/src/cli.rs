@@ -4,7 +4,7 @@ use clap::Parser;
 use std::path::PathBuf;
 
 #[derive(Parser, Debug)]
-#[command(name = "scanner")]
+#[command(name = "page-scanner")]
 #[command(about = "Document page scanner: detect page, warp to A4, export PDF/image")]
 pub struct Cli {
     /// Input: single image (png/jpg) or folder containing images
@@ -27,7 +27,7 @@ pub struct Cli {
     #[arg(long, value_name = "N", default_value = "10")]
     pub limit: usize,
 
-    /// Path to ONNX model (default: ~/.scanner/models/generic-page.onnx)
+    /// Path to ONNX model (default: models/seg-model.onnx)
     #[arg(long, value_name = "PATH")]
     pub model: Option<PathBuf>,
 

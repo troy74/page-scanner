@@ -38,7 +38,8 @@ impl Config {
             .unwrap_or_else(|| PathBuf::from(".scanner/models"))
     }
 
+    /// Default model path: models/seg-model.onnx relative to current directory.
     pub fn default_model_path() -> PathBuf {
-        Self::models_dir().join("generic-page.onnx")
+        PathBuf::from("models/seg-model.onnx")
     }
 }

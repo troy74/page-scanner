@@ -38,8 +38,7 @@ fn run() -> Result<(), String> {
     if !model_path.exists() {
         return Err(format!(
             "Model not found: {}\n\
-             Run the dev script to create generic-page.onnx and place it in ~/.scanner/models/ \
-             or pass --model /path/to/model.onnx",
+             Place seg-model.onnx in models/ or pass --model /path/to/model.onnx",
             model_path.display()
         ));
     }
