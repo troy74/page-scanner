@@ -1,0 +1,20 @@
+# Build and runtime
+/target/
+scanner/target/
+.venv/
+scanner/.venv/
+
+# Output and training
+/output/
+scanner/output/
+/runs/
+traindata/
+
+# Models (large binaries; ship separately or use Git LFS)
+*.onnx
+*.pt
+scanner/models/*.onnx
+
+# OS
+.DS_Store
+

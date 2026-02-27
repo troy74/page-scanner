@@ -1,0 +1,36 @@
+[package]
+name = "scanner"
+version = "0.1.0"
+edition = "2021"
+description = "Document page scanner CLI: ONNX detection, A4 warp, PDF/image export"
+authors = ["scanner-cli"]
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+ort = { version = "2.0.0-rc.11", default-features = false, features = ["ndarray", "std", "download-binaries", "tls-native"] }
+image = "0.25"
+imageproc = "0.24"
+chrono = "0.4"
+serde = { version = "1", features = ["derive"] }
+toml = "0.8"
+ndarray = "0.16"
+serde_json = "1"
+pdf-writer = { version = "0.14", default-features = false }
+
+[target.'cfg(unix)'.dependencies]
+dirs = "5"
+
+[features]
+default = []
+llm = ["dep:reqwest"]
+
+[dependencies.reqwest]
+version = "0.12"
+optional = true
+features = ["json", "blocking"]
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true
