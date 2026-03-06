@@ -1,6 +1,6 @@
 # scanner
 
-Document page scanner CLI: detect page in PNG/JPG via a quantized ONNX YOLOv11 model, warp the page region (irregular quadrilateral when available) to a rectangle with minimal stretch, fit to A4, apply cleanup filters, export to PDF or image. Optional OCR (tesseract) and LLM (OpenAI).
+Document page scanner CLI: detect page in PNG/JPG via an ONNX YOLOv11 model, warp the page region (irregular quadrilateral when available) to a rectangle with minimal stretch, fit to A4, apply cleanup filters, export to PDF or image. Optional OCR (tesseract) and LLM (OpenAI).
 
 **Ship target:** Linux. **Develop and test:** macOS and Linux (same codebase).
 
@@ -21,7 +21,7 @@ cargo build --release --features llm
 
 ## Model
 
-Place the quantized ONNX model at:
+Place the ONNX model at:
 
 - **Default:** `models/seg-model.onnx` (relative to the current working directory when you run `page-scanner`)
 - Or pass `--model /path/to/model.onnx` to point at any compatible ONNX model
