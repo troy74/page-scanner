@@ -14,6 +14,12 @@ traindata/
 *.onnx
 *.pt
 scanner/models/*.onnx
+# Allow checked-in models for packaged binaries
+!scanner/binaries/**/models/*.onnx
+
+# Packaging
+scanner/dist-macos/
+scanner/*-macos.zip
 
 # OS
 .DS_Store

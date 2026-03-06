@@ -23,14 +23,14 @@ cargo build --release --features llm
 
 Place the quantized ONNX model at:
 
-- **Default:** `~/.scanner/models/generic-page-int8.onnx`
-- Or pass `--model /path/to/model.onnx`
+- **Default:** `models/seg-model.onnx` (relative to the current working directory when you run `page-scanner`)
+- Or pass `--model /path/to/model.onnx` to point at any compatible ONNX model
 
 To create the model (dev only, Python):
 
 1. Create a venv and install: `python3 -m venv .venv && .venv/bin/pip install ultralytics onnx onnxruntime torch huggingface_hub`
 2. Run: `.venv/bin/python scripts/convert_and_quantize.py` (or pass path to `model.pt`). Output: `generic-page-int8.onnx` in the project dir.
-3. Copy `generic-page-int8.onnx` to `~/.scanner/models/`.
+3. Copy or rename `generic-page-int8.onnx` to `models/seg-model.onnx` next to the binary, or pass its path explicitly via `--model /path/to/generic-page-int8.onnx`.
 
 ## Usage
 
@@ -58,8 +58,27 @@ scanner --help
 
 - Build and run on macOS: `cargo run -- input.jpg`, `cargo test`.
 - Install tesseract for OCR: `brew install tesseract`.
-- Put `generic-page-int8.onnx` in `~/.scanner/models/` or use `--model /path/to/model.onnx`.
+- Put `seg-model.onnx` in `./models/` (project root) or use `--model /path/to/model.onnx`.
 - Config (optional): `~/.scanner/config.toml` (e.g. `default_dpi`, `default_cleanimg`, `openai_model`). CLI overrides config.
+
+## Prebuilt binaries
+
+This repo includes convenience binaries for common platforms under `scanner/binaries/`:
+
+- `binaries/macos/page-scanner` – macOS build (Apple Silicon), expects `models/seg-model.onnx` alongside it (provided in `binaries/macos/models/seg-model.onnx`).
+- `binaries/linux x86/page-scanner` – x86_64 Linux build, built on Ubuntu 24.04 (glibc 2.38), expects `models/seg-model.onnx` alongside it (provided in `binaries/linux x86/models/seg-model.onnx`).
+
+For other environments, build from source with `cargo build --release` and ensure `models/seg-model.onnx` is present relative to your working directory or pass `--model`.
+
+## OpenClaw skill
+
+An OpenClaw skill definition for `page-scanner` lives at `scanner/openclaw/SKILL.md`. To use it:
+
+1. Create a skill folder in your OpenClaw skills directory (for example `~/.openclaw/skills/page-scanner/`).
+2. Copy the appropriate binary (`page-scanner`) from `scanner/binaries/<platform>/` into that folder.
+3. Copy the matching `models/seg-model.onnx` into a `models/` subfolder next to the binary (so the binary can resolve `models/seg-model.onnx` by default).
+4. Place the `SKILL.md` from `scanner/openclaw/` into that skill folder (or keep it in sync if you already initialized the skill there).
+5. Follow OpenClaw’s instructions to enable or reference the `page-scanner` skill so the agent knows it can call this CLI.
 
 ## Geometry
 
